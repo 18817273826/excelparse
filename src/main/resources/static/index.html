@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>非模块化方式使用layui</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<div class="layui-upload">
+    <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+    <button type="button" class="layui-btn" id="test9">开始上传</button>
+</div>
+<script src="layui/layui.all.js"></script>
+<script>
+    layui.use('upload', function() {
+        var $ = layui.jquery
+            , upload = layui.upload;
+
+        upload.render({
+            elem: '#test8'
+            , url: '/upload'
+            , auto: false
+            ,multiple: true
+            ,accept: 'file' //普通文件
+            , bindAction: '#test9'
+            , done: function (res) {
+                if (res=="1"){
+                    console.log("上传成功")
+                } else {
+                    console.log("上传失败")
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>
+
