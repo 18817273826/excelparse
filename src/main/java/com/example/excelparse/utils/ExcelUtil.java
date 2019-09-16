@@ -25,6 +25,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import static org.apache.poi.ss.usermodel.Cell.*;
+
 
 /**
  * 功能说明：Excel 导入/导出
@@ -88,7 +90,7 @@ public class ExcelUtil {
     /**
      * 读取 office excel
      *
-     * @param stream
+     * @param inputStream
      * @return
      * @throws IOException
      */
@@ -123,7 +125,7 @@ public class ExcelUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            IOUtils.closeQuietly(workbook);
+            //IOUtils.closeQuietly(workbook);
             IOUtils.closeQuietly(inputStream);
         }
         return list;
@@ -132,7 +134,7 @@ public class ExcelUtil {
     /**
      * 获取excel数据 将之转换成bean
      *
-     * @param path
+     * @param inputStream
      * @param cls
      * @param <T>
      * @return
@@ -190,7 +192,7 @@ public class ExcelUtil {
         } catch (Exception e) {
             dataList = null;
         } finally {
-            IOUtils.closeQuietly(workbook);
+            //IOUtils.closeQuietly(workbook);
             IOUtils.closeQuietly(inputStream);
         }
         return dataList;
@@ -204,13 +206,13 @@ public class ExcelUtil {
      */
     private static Object getCellValue(Cell cell) {
         Object value = null;
-        switch (cell.getCellTypeEnum()) {
-            case _NONE:
+        switch (cell.getCellType()) {
+            case CELL_TYPE_ERROR:
                 break;
-            case STRING:
+            case CELL_TYPE_STRING:
                 value = cell.getStringCellValue();
                 break;
-            case NUMERIC:
+            case CELL_TYPE_NUMERIC:
                 if(DateUtil.isCellDateFormatted(cell)){ //日期
                     value = FAST_DATE_FORMAT.format(DateUtil.getJavaDate(cell.getNumericCellValue()));//统一转成 yyyy/MM/dd
                 } else if("@".equals(cell.getCellStyle().getDataFormatString())
@@ -233,10 +235,10 @@ public class ExcelUtil {
                     value = DecimalFormat.getCurrencyInstance().format(value);
                 }
                 break;
-            case BOOLEAN:
+            case CELL_TYPE_BOOLEAN:
                 value = cell.getBooleanCellValue();
                 break;
-            case BLANK:
+            case CELL_TYPE_BLANK:
                 //value = ",";
                 break;
             default:

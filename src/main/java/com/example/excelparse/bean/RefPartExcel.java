@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class RefPartExcel {
-    @ExcelColumn("原零件号")
+    @ExcelColumn("原零件号123")
     private  String partNo;
-    @ExcelColumn("原零件名称")
+    @ExcelColumn("原零件名称1")
     private  String partNum;
-    @ExcelColumn("参考零件号")
+    @ExcelColumn("参考零件号1")
     private  String refPartNum;
     /*@ExcelColumn("长")
     private  String high;*/
