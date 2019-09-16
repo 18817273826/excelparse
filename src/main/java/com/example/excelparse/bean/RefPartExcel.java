@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class RefPartExcel {
-    @ExcelColumn("原零件号123")
+    @ExcelColumn("原零件号123fxc")
     private  String partNo;
     @ExcelColumn("原零件名称1")
     private  String partNum;
